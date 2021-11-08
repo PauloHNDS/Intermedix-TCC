@@ -12,30 +12,6 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastroClientes extends javax.swing.JFrame {
 
-    private void buscarServico() {
-
-        ConexaoSQLite conexao = new ConexaoSQLite();
-
-        conexao.conectar();
-
-        ResultSet resultSQL = null;
-
-        PreparedStatement comandoSQL = null;
-
-        String insertSQL = "select Nome from Servicos;";
-
-        try {
-
-            comandoSQL = conexao.criarPreparedStatement(insertSQL);
-            resultSQL = comandoSQL.executeQuery();
-            while (resultSQL.next()) {
-                txtServicos.addItem(resultSQL.getString("Nome"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
-        }
-
-    }
 
     protected void insertCadastro() {
 
@@ -49,9 +25,7 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
 
         PreparedStatement readComando = null;
 
-        String insertSQL = "insert into Clientes(NomeCompleto,Idade,Email,Telefone,Endereco,Cpf,DataNascimento,Cidade,Sexo,Servico) VALUES(?,?,?,?,?,?,?,?,?,?);";
-
-        String readSql = "select Nome from Servicos where Nome = ?";
+        String insertSQL = "insert into Clientes(NomeCompleto,Idade,Email,Telefone,Endereco,Cpf,DataNascimento,Cidade,Sexo) VALUES(?,?,?,?,?,?,?,?,?);";
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -59,11 +33,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
 
         //criando Stament para fazer insert 
         try {
-
-            readComando = conexao.criarPreparedStatement(readSql);
-            readComando.setString(1, txtServicos.getSelectedItem().toString());
-            resultSQL = readComando.executeQuery();
-            String idServices = resultSQL.getString("Nome");
             
             comandoSQL = conexao.criarPreparedStatement(insertSQL);
             comandoSQL.setString(1, txNomeCompleto.getText());
@@ -75,8 +44,9 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
             comandoSQL.setString(7, date);
             comandoSQL.setString(8, txtCidade.getText());
             comandoSQL.setString(9, txtSexo.getSelectedItem().toString());
-            comandoSQL.setString(10, txtServicos.getSelectedItem().toString());
 
+            
+            
             if (txtEndereco.getText().isEmpty() || txtIdade.getText().isEmpty() || txtCidade.getText().isEmpty() || txtEmail.getText().isEmpty() || txNomeCompleto.getText().isEmpty() || txtTelefone.getText().isEmpty()) {
 
                 TelaPreencherCadastro preencher = new TelaPreencherCadastro();
@@ -128,8 +98,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
 
         setIcon();
 
-        buscarServico();
-
         txNomeCompleto.setDocument(new Letras());
         txtIdade.setDocument(new Numeros());
         txtCidade.setDocument(new Letras());
@@ -152,8 +120,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
         painel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtServicos = new javax.swing.JComboBox<>();
         btnRegistrar = new javax.swing.JLabel();
         btnRegistrosBrutos = new javax.swing.JLabel();
         menuPrincipal = new javax.swing.JPanel();
@@ -233,12 +199,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IconBusinessman.png"))); // NOI18N
         painel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, -1, 60));
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setText("Serviço");
-
-        txtServicos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
         btnRegistrar.setBackground(new java.awt.Color(23, 35, 51));
         btnRegistrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -270,30 +230,18 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
         menuSecundarioLayout.setHorizontalGroup(
             menuSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuSecundarioLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
                 .addGroup(menuSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuSecundarioLayout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(jLabel11))
-                    .addGroup(menuSecundarioLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(txtServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuSecundarioLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(menuSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegistrosBrutos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrosBrutos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
             .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuSecundarioLayout.setVerticalGroup(
             menuSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuSecundarioLayout.createSequentialGroup()
                 .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtServicos, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                .addGap(165, 165, 165)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegistrosBrutos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -653,7 +601,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
     public javax.swing.JLabel btnRegistrosBrutos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -674,7 +621,6 @@ public class TelaCadastroClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtIdade;
-    private javax.swing.JComboBox<Object> txtServicos;
     private javax.swing.JComboBox<String> txtSexo;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables

@@ -18,7 +18,6 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
 
         setIcon();
         pesquisarClientesSem();
-        buscarServicos();
         
         tabelaClientesBruto.getTableHeader().setOpaque(false);
         tabelaClientesBruto.getTableHeader().setBackground(new Color(71, 120, 197));
@@ -44,7 +43,7 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         ResultSet resultSQL = null;
         PreparedStatement comandoSQL = null;
         
-        String sql = "update Clientes set NomeCompleto=?, Idade=?, Email=?, Telefone=?, Endereco=?, Cpf=?, DataNascimento=?, Cidade=?, Sexo=?, Servico=? where Id=?";
+        String sql = "update Clientes set NomeCompleto=?, Idade=?, Email=?, Telefone=?, Endereco=?, Cpf=?, DataNascimento=?, Cidade=?, Sexo=? where Id=?";
         
         try {
             
@@ -60,9 +59,8 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
             comandoSQL.setString(7, txtEditar7.getText());
             comandoSQL.setString(8, txtEditar8.getText());
             comandoSQL.setString(9, txtSexo.getSelectedItem().toString());
-            comandoSQL.setString(10, txtServicos.getSelectedItem().toString());
             
-            comandoSQL.setString(11, txtEditarCod.getText());
+            comandoSQL.setString(10, txtEditarCod.getText());
             
             
             if (txtEditar1.getText().isEmpty() || txtEditar2.getText().isEmpty() || txtEditar3.getText().isEmpty() || txtEditar4.getText().isEmpty() || txtEditar5.getText().isEmpty() || txtEditar6.getText().isEmpty() || txtEditar7.getText().isEmpty() || txtEditar8.getText().isEmpty()){
@@ -113,30 +111,6 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         }
     }
     
-    private void buscarServicos() {
-
-        ConexaoSQLite conexao = new ConexaoSQLite();
-
-        conexao.conectar();
-
-        ResultSet resultSQL = null;
-
-        PreparedStatement comandoSQL = null;
-
-        String insertSQL = "select Nome from Servicos;";
-
-        try {
-
-            comandoSQL = conexao.criarPreparedStatement(insertSQL);
-            resultSQL = comandoSQL.executeQuery();
-            while (resultSQL.next()) {
-                txtServicos.addItem(resultSQL.getString("Nome"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
-        }
-
-    }
     
     protected void pesquisarClientesSem() {
 
@@ -146,7 +120,7 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         ResultSet resultSQL = null;
         PreparedStatement comandoSQL = null;
 
-        String sql = "select Id, NomeCompleto, Idade, Email, Telefone, Endereco, Cpf, DataNascimento, Cidade, Sexo, Servico from Clientes where NomeCompleto like ?";
+        String sql = "select Id, NomeCompleto, Idade, Email, Telefone, Endereco, Cpf, DataNascimento, Cidade, Sexo from Clientes where NomeCompleto like ?";
 
         try {
 
@@ -213,7 +187,7 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         ResultSet resultSQL = null;
         PreparedStatement comandoSQL = null;
 
-        String sql = "select Id, NomeCompleto, Idade, Email, Telefone, Endereco, Cpf, DataNascimento, Cidade, Sexo, Servico from Clientes where NomeCompleto like ?";
+        String sql = "select Id, NomeCompleto, Idade, Email, Telefone, Endereco, Cpf, DataNascimento, Cidade, Sexo from Clientes where NomeCompleto like ?";
 
         try {
 
@@ -270,7 +244,6 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         txtEditar1 = new javax.swing.JTextField();
         txtEditarCod = new javax.swing.JTextField();
         txtSexo = new javax.swing.JComboBox<>();
-        txtServicos = new javax.swing.JComboBox<>();
         txtEditar4 = new javax.swing.JFormattedTextField();
         txtEditar6 = new javax.swing.JFormattedTextField();
         txtEditar7 = new javax.swing.JFormattedTextField();
@@ -481,8 +454,6 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
         txtSexo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Feminino", "Masculino", " " }));
 
-        txtServicos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
         try {
             txtEditar4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #########")));
         } catch (java.text.ParseException ex) {
@@ -532,15 +503,13 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
                         .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
                 .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelClientesLayout.createSequentialGroup()
                         .addComponent(deletarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnDeletarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelClientesLayout.createSequentialGroup()
-                        .addComponent(txtServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtEditarCod, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -580,8 +549,7 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
                     .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEditarCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtServicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
                 .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEditar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -673,7 +641,7 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
 
     private void btnAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtualizarMouseClicked
         pesquisarClientes();
-        buscarServicos();
+
     }//GEN-LAST:event_btnAtualizarMouseClicked
 
     private void deletarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarClientesActionPerformed
@@ -837,7 +805,6 @@ public class TelaRegistrosBrutosClientes extends javax.swing.JFrame {
     public javax.swing.JTextField txtEditar8;
     public javax.swing.JTextField txtEditar9;
     public javax.swing.JTextField txtEditarCod;
-    private javax.swing.JComboBox<String> txtServicos;
     private javax.swing.JComboBox<String> txtSexo;
     // End of variables declaration//GEN-END:variables
 }
