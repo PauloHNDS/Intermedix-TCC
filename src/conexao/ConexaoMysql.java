@@ -19,7 +19,7 @@ public class ConexaoMysql {
     public boolean conectar(){
         try {
             
-                String url = "jdbc:mysql://localhost:3306/usuarios_intermedix";
+                String url = "jdbc:mysql://localhost:3306/usuarios_sytecb";
                 String user = "root";
                 String pass = "";
                 this.conexao = DriverManager.getConnection(url,user, pass);
@@ -27,7 +27,7 @@ public class ConexaoMysql {
             
             } catch (SQLException e) {
             
-                JOptionPane.showMessageDialog(null,"ERROR" + e.getMessage());
+                JOptionPane.showMessageDialog(null,"ERROR MY SQL" + e.getMessage());
                 return false;
             
             }
